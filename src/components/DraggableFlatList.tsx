@@ -96,7 +96,7 @@ function DraggableFlatListInner<T>(props: DraggableFlatListProps<T>) {
 
   let [activeKey, setActiveKey] = useState<string | null>(null);
   const [layoutAnimationDisabled, setLayoutAnimationDisabled] = useState(
-    !propsRef.current.enableLayoutAnimationExperimental
+    !propsRef.value.enableLayoutAnimationExperimental
   );
 
   const keyExtractor = useStableCallback((item: T, index: number) => {
@@ -117,7 +117,7 @@ function DraggableFlatListInner<T>(props: DraggableFlatListProps<T>) {
   }
 
   useEffect(() => {
-    if (!propsRef.current.enableLayoutAnimationExperimental) return;
+    if (!propsRef.value.enableLayoutAnimationExperimental) return;
     if (activeKey) {
       setLayoutAnimationDisabled(true);
     } else {
@@ -132,20 +132,20 @@ function DraggableFlatListInner<T>(props: DraggableFlatListProps<T>) {
   useLayoutEffect(() => {
     props.data.forEach((d, i) => {
       const key = keyExtractor(d, i);
-      keyToIndexRef.current.set(key, i);
+      keyToIndexRef.value.set(key, i);
     });
   }, [props.data, keyExtractor, keyToIndexRef]);
 
   const drag = useStableCallback((activeKey: string) => {
     if (disabled.value) return;
-    const index = keyToIndexRef.current.get(activeKey);
-    const cellData = cellDataRef.current.get(activeKey);
+    const index = keyToIndexRef.value.get(activeKey);
+    const cellData = cellDataRef.value.get(activeKey);
     if (cellData) {
       activeCellOffset.value = cellData.measurements.offset;
       activeCellSize.value = cellData.measurements.size;
     }
 
-    const { onDragBegin } = propsRef.current;
+    const { onDragBegin } = propsRef.value;
     if (index !== undefined) {
       spacerIndexAnim.value = index;
       activeIndexAnim.value = index;
@@ -189,8 +189,8 @@ function DraggableFlatListInner<T>(props: DraggableFlatListProps<T>) {
   const renderItem: ListRenderItem<T> = useCallback(
     ({ item, index }) => {
       const key = keyExtractor(item, index);
-      if (index !== keyToIndexRef.current.get(key)) {
-        keyToIndexRef.current.set(key, index);
+      if (index !== keyToIndexRef.value.get(key)) {
+        keyToIndexRef.value.set(key, index);
       }
 
       return (

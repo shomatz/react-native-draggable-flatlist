@@ -40,28 +40,25 @@ function PlaceholderItem<T>({ renderPlaceholder }: Props<T>) {
   );
 
   const activeIndex = activeKey
-    ? keyToIndexRef.current.get(activeKey)
+    ? keyToIndexRef.value.get(activeKey)
     : undefined;
   const activeItem =
-    activeIndex === undefined ? null : propsRef.current?.data[activeIndex];
+    activeIndex === undefined ? null : propsRef.value?.data[activeIndex];
 
   const animStyle = useAnimatedStyle(() => {
-    const offset = placeholderOffset.value - scrollOffset.value
+    const offset = placeholderOffset.value - scrollOffset.value;
     return {
-        opacity: size >= 0 ? 1 : 0,
-        overflow: 'hidden',
-        transform: [
-          horizontalAnim.value
-            ? { translateX: offset }
-            : { translateY: offset },
-        ],
-      };
-
+      opacity: size >= 0 ? 1 : 0,
+      overflow: "hidden",
+      transform: [
+        horizontalAnim.value ? { translateX: offset } : { translateY: offset },
+      ],
+    };
   }, [spacerIndexAnim, placeholderOffset, horizontalAnim, scrollOffset, size]);
 
   const extraStyle = useMemo(() => {
     return horizontal ? { width: size } : { height: size };
-  }, [horizontal, size])
+  }, [horizontal, size]);
 
   return (
     <Animated.View

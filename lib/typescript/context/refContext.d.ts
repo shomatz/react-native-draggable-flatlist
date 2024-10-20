@@ -6,10 +6,10 @@ import Animated, {
 } from "react-native-reanimated";
 import { CellData, DraggableFlatListProps } from "../types";
 declare type RefContextValue<T> = {
-  propsRef: React.MutableRefObject<DraggableFlatListProps<T>>;
+  propsRef: SharedValue<DraggableFlatListProps<T>>;
   animationConfigRef: SharedValue<WithSpringConfig>;
-  cellDataRef: React.MutableRefObject<Map<string, CellData>>;
-  keyToIndexRef: React.MutableRefObject<Map<string, number>>;
+  cellDataRef: SharedValue<Map<string, CellData>>;
+  keyToIndexRef: SharedValue<Map<string, number>>;
   containerRef: React.RefObject<Animated.View>;
   flatlistRef: React.RefObject<FlatList<T>> | React.ForwardedRef<FlatList<T>>;
   scrollViewRef: React.RefObject<Animated.ScrollView>;

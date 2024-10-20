@@ -75,7 +75,7 @@ function CellRendererComponent<T>(props: Props<T>) {
       if (isWeb && horizontal) x += scrollOffset.value;
       const cellOffset = horizontal ? x : y;
       const cellSize = horizontal ? w : h;
-      cellDataRef.current.set(key, {
+      cellDataRef.value.set(key, {
         measurements: { size: cellSize, offset: cellOffset },
       });
 
@@ -84,7 +84,7 @@ function CellRendererComponent<T>(props: Props<T>) {
     };
 
     const onFail = () => {
-      if (propsRef.current?.debug) {
+      if (propsRef.value?.debug) {
         console.log(`## on measure fail, index: ${index}`);
       }
     };
@@ -126,7 +126,7 @@ function CellRendererComponent<T>(props: Props<T>) {
     itemEnteringAnimation,
     itemExitingAnimation,
     itemLayoutAnimation,
-  } = propsRef.current;
+  } = propsRef.value;
 
   useEffect(() => {
     // NOTE: Keep an eye on reanimated LayoutAnimation refactor:
@@ -134,7 +134,7 @@ function CellRendererComponent<T>(props: Props<T>) {
     // We might have to change the way we register/unregister LayouAnimations:
     // - get native module: https://github.com/software-mansion/react-native-reanimated/blob/cf59766460d05eb30357913455318d8a95909468/src/reanimated2/NativeReanimated/NativeReanimated.ts#L18
     // - register layout animation for tag: https://github.com/software-mansion/react-native-reanimated/blob/cf59766460d05eb30357913455318d8a95909468/src/reanimated2/NativeReanimated/NativeReanimated.ts#L99
-    if (!propsRef.current.enableLayoutAnimationExperimental) return;
+    if (!propsRef.value.enableLayoutAnimationExperimental) return;
     const tag = findNodeHandle(viewRef.current);
 
     runOnUI((t: number | null, _layoutDisabled) => {
@@ -159,7 +159,7 @@ function CellRendererComponent<T>(props: Props<T>) {
       entering={itemEnteringAnimation}
       exiting={itemExitingAnimation}
       layout={
-        propsRef.current.enableLayoutAnimationExperimental
+        propsRef.value.enableLayoutAnimationExperimental
           ? itemLayoutAnimation
           : undefined
       }

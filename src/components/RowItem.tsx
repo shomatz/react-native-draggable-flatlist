@@ -4,6 +4,7 @@ import { useRefs } from "../context/refContext";
 import { useStableCallback } from "../hooks/useStableCallback";
 import { RenderItem } from "../types";
 import { typedMemo } from "../utils";
+import { useSharedValue } from "react-native-reanimated";
 
 type Props<T> = {
   extraData?: any;
@@ -15,8 +16,8 @@ type Props<T> = {
 };
 
 function RowItem<T>(props: Props<T>) {
-  const propsRef = useRef(props);
-  propsRef.current = props;
+  const propsRef = useSharedValue(props);
+  propsRef.value = props;
 
   const { activeKey } = useDraggableFlatListContext();
   const activeKeyRef = useRef(activeKey);
@@ -24,7 +25,7 @@ function RowItem<T>(props: Props<T>) {
   const { keyToIndexRef } = useRefs();
 
   const drag = useStableCallback(() => {
-    const { drag, itemKey, debug } = propsRef.current;
+    const { drag, itemKey, debug } = propsRef.value;
     if (activeKeyRef.current) {
       // already dragging an item, noop
       if (debug)
@@ -38,7 +39,7 @@ function RowItem<T>(props: Props<T>) {
   const { renderItem, item, itemKey, extraData } = props;
 
   const getIndex = useStableCallback(() => {
-    return keyToIndexRef.current.get(itemKey);
+    return keyToIndexRef.value.get(itemKey);
   });
 
   return (
