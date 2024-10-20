@@ -40,7 +40,7 @@ function PlaceholderItem<T>({ renderPlaceholder }: Props<T>) {
   );
 
   const activeIndex = activeKey
-    ? keyToIndexRef.value.get(activeKey)
+    ? keyToIndexRef.current.get(activeKey)
     : undefined;
   const activeItem =
     activeIndex === undefined ? null : propsRef.value?.data[activeIndex];

@@ -132,14 +132,14 @@ function DraggableFlatListInner<T>(props: DraggableFlatListProps<T>) {
   useLayoutEffect(() => {
     props.data.forEach((d, i) => {
       const key = keyExtractor(d, i);
-      keyToIndexRef.value.set(key, i);
+      keyToIndexRef.current.set(key, i);
     });
   }, [props.data, keyExtractor, keyToIndexRef]);
 
   const drag = useStableCallback((activeKey: string) => {
     if (disabled.value) return;
-    const index = keyToIndexRef.value.get(activeKey);
-    const cellData = cellDataRef.value.get(activeKey);
+    const index = keyToIndexRef.current.get(activeKey);
+    const cellData = cellDataRef.current.get(activeKey);
     if (cellData) {
       activeCellOffset.value = cellData.measurements.offset;
       activeCellSize.value = cellData.measurements.size;
@@ -189,8 +189,8 @@ function DraggableFlatListInner<T>(props: DraggableFlatListProps<T>) {
   const renderItem: ListRenderItem<T> = useCallback(
     ({ item, index }) => {
       const key = keyExtractor(item, index);
-      if (index !== keyToIndexRef.value.get(key)) {
-        keyToIndexRef.value.set(key, index);
+      if (index !== keyToIndexRef.current.get(key)) {
+        keyToIndexRef.current.set(key, index);
       }
 
       return (

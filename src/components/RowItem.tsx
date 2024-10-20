@@ -39,7 +39,7 @@ function RowItem<T>(props: Props<T>) {
   const { renderItem, item, itemKey, extraData } = props;
 
   const getIndex = useStableCallback(() => {
-    return keyToIndexRef.value.get(itemKey);
+    return keyToIndexRef.current.get(itemKey);
   });
 
   return (

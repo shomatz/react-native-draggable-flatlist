@@ -75,7 +75,7 @@ function CellRendererComponent<T>(props: Props<T>) {
       if (isWeb && horizontal) x += scrollOffset.value;
       const cellOffset = horizontal ? x : y;
       const cellSize = horizontal ? w : h;
-      cellDataRef.value.set(key, {
+      cellDataRef.current.set(key, {
         measurements: { size: cellSize, offset: cellOffset },
       });
 
